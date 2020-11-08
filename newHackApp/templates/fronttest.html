@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>Health Submission Form</title>
+    </head>
+    <style>
+
+    label {
+        padding: 12px 12px 12px 0;
+        display: inline-block;
+    }
+    input[type=text], select, textarea{
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        resize: vertical;
+    }
+
+    /* Style the submit button */
+    input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+    }
+
+    /* Style the container */
+    .container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    }
+    /* Floating column for labels: 25% width */
+    .col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+    }
+
+    /* Floating column for inputs: 75% width */
+    .col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+    }
+    @media screen and (max-width: 600px) {
+        .col-25, .col-75, input[type=submit] {
+            width: 100%;
+            margin-top: 0;
+        }
+    }
+
+    </style>
+    <body>
+        <div class="container">
+            <form action="submission" method="post">
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="patientName"> Name:</label><br>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" id="patientName" name="patientName" placeholder = "Your Name..."><br>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="patientDescription">Description:</label><br>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" id="patientDescription" name="patientDescription" placeholder = "Description..."><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="patientAvailability">Availability:</label><br>
+                    </div>
+                    <div class="col-75">
+                        <input type="date" id="patientAvailability" name="patientAvailability" placeholder = "Availability"><br>
+                    </div>
+                <div class="row">
+                    <input type="submit" onclick = submit() value="Submit">
+                    <script>
+                        function submit(){
+                            const sendData = {
+                                Name: formData.patientName, 
+                                Description: formData.patientDescription, 
+                                Availability: formData.patientAvailability
+
+                            };
+
+                            const jsonString = JSON.stringify(sendData);
+
+
+
+                            /*
+                            import serialize from 'form-serialize';
+                            const formData = serialize(formNode, { hash: true });
+                            const apiData = { Name: formData.patientName, Description: formData.patientDescription, Availability: formData.patientAvailability};
+                            const json = JSON.stringify(apiData);
+                            console.log(json);
+                            */
+                            $.ajax({
+                                url: 'submission',
+                                type: 'post',
+                                dataType: 'json',
+                                contentType: 'application/json',
+                                /*
+                                sucess: function(data) {
+                                    $('#target').html(data.msg);
+                                },
+                                */
+                                data: jsonString
+                            });
+
+                        }
+
+
+                    </script>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

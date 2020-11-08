@@ -1,0 +1,1 @@
+globalBool = True
